@@ -1,12 +1,12 @@
-scene.onHitWall(SpriteKind.Player, function (sprite, location) {
-    if (!(mySprite.isHittingTile(CollisionDirection.Top))) {
-        jump = 0
-    }
-})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (jump < 1) {
         jump += 1
         mySprite.vy = -160
+    }
+})
+scene.onHitWall(SpriteKind.Player, function (sprite, location) {
+    if (!(mySprite.isHittingTile(CollisionDirection.Top))) {
+        jump = 0
     }
 })
 info.onCountdownEnd(function () {
@@ -15,9 +15,12 @@ info.onCountdownEnd(function () {
 function doSomething (num: number) {
 	
 }
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
-	
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, location2) {
+    timeList.push(info.countdown())
+    info.stopCountdown()
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
 })
+let timeList: number[] = []
 let jump = 0
 let mySprite: Sprite = null
 scene.setBackgroundImage(img`
@@ -166,10 +169,7 @@ controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
 jump = 0
-let timeList: number[] = []
+timeList = []
 game.splash("Press to start")
 info.setScore(20)
 info.startCountdown(20)
-if (true) {
-	
-}

@@ -3,9 +3,7 @@
     "description": "",
     "dependencies": {
         "device": "*",
-        "controller": "*",
-        "arcade-split-screen": "github:riknoll/arcade-split-screen#v0.0.3",
-        "Timers": "github:microsoft/arcade-timers#v1.1.0"
+        "controller": "*"
     },
     "files": [
         "main.blocks",
