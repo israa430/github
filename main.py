@@ -2,7 +2,7 @@ def on_up_pressed():
     global jump
     if jump < 1:
         jump += 1
-        mySprite.vy = -155
+        mySprite.vy = -160
 controller.up.on_event(ControllerButtonEvent.PRESSED, on_up_pressed)
 
 def on_hit_wall(sprite, location):
@@ -10,6 +10,10 @@ def on_hit_wall(sprite, location):
     if not (mySprite.is_hitting_tile(CollisionDirection.TOP)):
         jump = 0
 scene.on_hit_wall(SpriteKind.player, on_hit_wall)
+
+def on_countdown_end():
+    info.change_score_by(0)
+info.on_countdown_end(on_countdown_end)
 
 jump = 0
 mySprite: Sprite = None
@@ -162,3 +166,7 @@ controller.move_sprite(mySprite, 100, 0)
 scene.camera_follow_sprite(mySprite)
 tiles.place_on_tile(mySprite, tiles.get_tile_location(2, 14))
 jump = 0
+info.set_score(0)
+info.start_countdown(15)
+pause(2000)
+mySprite.say_text(":)")
