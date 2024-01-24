@@ -12,9 +12,25 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 info.onCountdownEnd(function () {
 	
 })
-function doSomething (list: any[]) {
+function compareTimes (list: number[]) {
+    current_best_p1 = 0
     for (let index = 0; index <= 2; index++) {
-    	
+        if (list[index] > current_best_p1) {
+            current_best_p1 = list[index]
+        }
+    }
+    current_best_p2 = 0
+    for (let index = 0; index <= 2; index++) {
+        if (list[index + 3] > current_best_p2) {
+            current_best_p2 = list[index]
+        }
+    }
+    if (current_best_p1 > current_best_p2) {
+        game.splash("Player 1 wins")
+    } else if (current_best_p1 < current_best_p2) {
+        game.splash("Player 2 wins")
+    } else {
+        game.splash("Tie")
     }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, location2) {
@@ -26,7 +42,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, 
         info.startCountdown(20)
     } else if (turn == 5) {
         info.stopCountdown()
-        doSomething(times)
+        compareTimes(times)
     } else {
         times.push(info.countdown())
         info.stopCountdown()
@@ -36,6 +52,8 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, 
     }
     turn += 1
 })
+let current_best_p2 = 0
+let current_best_p1 = 0
 let turn = 0
 let times: number[] = []
 let jump = 0
