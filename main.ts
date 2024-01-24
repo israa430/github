@@ -1,12 +1,12 @@
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (jump < 1) {
-        jump += 1
-        mySprite.vy = -160
-    }
-})
 scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     if (!(mySprite.isHittingTile(CollisionDirection.Top))) {
         jump = 0
+    }
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (jump < 1) {
+        jump += 1
+        mySprite.vy = -160
     }
 })
 info.onCountdownEnd(function () {
@@ -18,7 +18,12 @@ function doSomething (num: number) {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, location2) {
     timeList.push(info.countdown())
     info.stopCountdown()
-    tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
+    if (true) {
+        game.splash("Player 1 turn")
+        tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
+        info.startCountdown(20)
+    }
+    turn += 1
 })
 let timeList: number[] = []
 let jump = 0
@@ -170,6 +175,6 @@ scene.cameraFollowSprite(mySprite)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
 jump = 0
 timeList = []
-game.splash("Press to start")
-info.setScore(20)
+let turn = 0
+game.showLongText("Each player 3 turns. Winner is best time of 3", DialogLayout.Bottom)
 info.startCountdown(20)
