@@ -12,20 +12,32 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 info.onCountdownEnd(function () {
 	
 })
-function doSomething (num: number) {
-	
+function doSomething (list: any[]) {
+    for (let index = 0; index <= 2; index++) {
+    	
+    }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, location2) {
-    timeList.push(info.countdown())
-    info.stopCountdown()
-    if (true) {
+    if (turn <= 1) {
+        times.push(info.countdown())
+        info.stopCountdown()
         game.splash("Player 1 turn")
+        tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
+        info.startCountdown(20)
+    } else if (turn == 5) {
+        info.stopCountdown()
+        doSomething(times)
+    } else {
+        times.push(info.countdown())
+        info.stopCountdown()
+        game.splash("Player 2 turn")
         tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
         info.startCountdown(20)
     }
     turn += 1
 })
-let timeList: number[] = []
+let turn = 0
+let times: number[] = []
 let jump = 0
 let mySprite: Sprite = null
 scene.setBackgroundImage(img`
@@ -174,7 +186,7 @@ controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
 jump = 0
-timeList = []
-let turn = 0
+times = []
+turn = 0
 game.showLongText("Each player 3 turns. Winner is best time of 3", DialogLayout.Bottom)
 info.startCountdown(20)
