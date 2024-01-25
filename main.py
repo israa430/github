@@ -4,30 +4,63 @@ def on_hit_wall(sprite, location):
         jump = 0
 scene.on_hit_wall(SpriteKind.player, on_hit_wall)
 
-def on_up_pressed():
+def on_a_pressed():
     global jump
     if jump < 1:
         jump += 1
         mySprite.vy = -160
-controller.up.on_event(ControllerButtonEvent.PRESSED, on_up_pressed)
+controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
 def on_countdown_end():
     pass
 info.on_countdown_end(on_countdown_end)
 
-def doSomething(num: number):
-    pass
+def compareTimes(list2: List[number]):
+    global current_best_p1, current_best_p2
+    current_best_p1 = 0
+    for index in range(3):
+        if list2[index] > current_best_p1:
+            current_best_p1 = list2[index]
+    current_best_p2 = 0
+    for index2 in range(3):
+        if list2[index2 + 3] > current_best_p2:
+            current_best_p2 = list2[index2 + 3]
+    if current_best_p1 > current_best_p2:
+        game.splash("Player 1 wins")
+    elif current_best_p1 < current_best_p2:
+        game.splash("Player 2 wins")
+    else:
+        game.splash("Tie")
 
 def on_overlap_tile(sprite2, location2):
-    timeList.append(info.countdown())
-    info.stop_countdown()
+    global turn
+    if turn <= 1:
+        times.append(info.countdown())
+        info.stop_countdown()
+        game.splash("Player 1 turn")
+        tiles.place_on_tile(mySprite, tiles.get_tile_location(2, 14))
+        info.start_countdown(20)
+    elif turn == 5:
+        times.append(info.countdown())
+        info.stop_countdown()
+        compareTimes(times)
+    else:
+        times.append(info.countdown())
+        info.stop_countdown()
+        game.splash("Player 2 turn")
+        tiles.place_on_tile(mySprite, tiles.get_tile_location(2, 14))
+        info.start_countdown(20)
+    turn += 1
 scene.on_overlap_tile(SpriteKind.player,
     assets.tile("""
         myTile2
     """),
     on_overlap_tile)
 
-timeList: List[number] = []
+current_best_p2 = 0
+current_best_p1 = 0
+turn = 0
+times: List[number] = []
 jump = 0
 mySprite: Sprite = None
 scene.set_background_image(img("""
@@ -179,9 +212,8 @@ controller.move_sprite(mySprite, 100, 0)
 scene.camera_follow_sprite(mySprite)
 tiles.place_on_tile(mySprite, tiles.get_tile_location(2, 14))
 jump = 0
-timeList = []
-game.splash("Press to start")
-info.set_score(20)
+times = []
+turn = 0
+game.show_long_text("Each player 3 turns. Winner is best time of 3",
+    DialogLayout.BOTTOM)
 info.start_countdown(20)
-if True:
-    pass

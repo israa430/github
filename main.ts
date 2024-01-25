@@ -12,17 +12,17 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 info.onCountdownEnd(function () {
 	
 })
-function compareTimes (list: number[]) {
+function compareTimes (list2: number[]) {
     current_best_p1 = 0
     for (let index = 0; index <= 2; index++) {
-        if (list[index] > current_best_p1) {
-            current_best_p1 = list[index]
+        if (list2[index] > current_best_p1) {
+            current_best_p1 = list2[index]
         }
     }
     current_best_p2 = 0
-    for (let index = 0; index <= 2; index++) {
-        if (list[index + 3] > current_best_p2) {
-            current_best_p2 = list[index]
+    for (let index2 = 0; index2 <= 2; index2++) {
+        if (list2[index2 + 3] > current_best_p2) {
+            current_best_p2 = list2[index2 + 3]
         }
     }
     if (current_best_p1 > current_best_p2) {
@@ -41,6 +41,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, 
         tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
         info.startCountdown(20)
     } else if (turn == 5) {
+        times.push(info.countdown())
         info.stopCountdown()
         compareTimes(times)
     } else {
