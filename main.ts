@@ -1,12 +1,12 @@
-scene.onHitWall(SpriteKind.Player, function (sprite, location) {
-    if (!(mySprite.isHittingTile(CollisionDirection.Top))) {
-        jump = 0
-    }
-})
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (jump < 1) {
         jump += 1
         mySprite.vy = -160
+    }
+})
+scene.onHitWall(SpriteKind.Player, function (sprite, location) {
+    if (!(mySprite.isHittingTile(CollisionDirection.Top))) {
+        jump = 0
     }
 })
 info.onCountdownEnd(function () {
