@@ -1,65 +1,23 @@
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (jump < 1) {
-        jump += 1
-        mySprite.vy = -170
-    }
-})
 scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     if (!(mySprite.isHittingTile(CollisionDirection.Top))) {
         jump = 0
     }
 })
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (jump < 1) {
+        jump += 1
+        mySprite.vy = -160
+    }
+})
 info.onCountdownEnd(function () {
 	
 })
-function compareTimes (list2: number[]) {
-    current_best_p1 = 0
-    for (let index = 0; index <= 2; index++) {
-        if (list2[index] > current_best_p1) {
-            current_best_p1 = list2[index]
-        }
-    }
-    current_best_p2 = 0
-    for (let index2 = 0; index2 <= 2; index2++) {
-        if (list2[index2 + 3] > current_best_p2) {
-            current_best_p2 = list2[index2 + 3]
-        }
-    }
-    if (current_best_p1 > current_best_p2) {
-        game.splash("Player 1 wins")
-        game.reset()
-    } else if (current_best_p1 < current_best_p2) {
-        game.splash("Player 2 wins")
-        game.reset()
-    } else {
-        game.showLongText("Tie! Best times of both players are equal", DialogLayout.Center)
-        game.reset()
-    }
+function doSomething (num: number) {
+	
 }
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, location2) {
-    if (turn <= 1) {
-        times.push(info.countdown())
-        info.stopCountdown()
-        game.splash("Player 1 turn")
-        tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
-        info.startCountdown(20)
-    } else if (turn == 5) {
-        times.push(info.countdown())
-        info.stopCountdown()
-        compareTimes(times)
-    } else {
-        times.push(info.countdown())
-        info.stopCountdown()
-        game.splash("Player 2 turn")
-        tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
-        info.startCountdown(20)
-    }
-    turn += 1
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
+	
 })
-let current_best_p2 = 0
-let current_best_p1 = 0
-let turn = 0
-let times: number[] = []
 let jump = 0
 let mySprite: Sprite = null
 scene.setBackgroundImage(img`
@@ -208,7 +166,10 @@ controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
 jump = 0
-times = []
-turn = 0
-game.showLongText("Each player 3 turns. Winner is best time of 3", DialogLayout.Bottom)
+let timeList: number[] = []
+game.splash("Press to start")
+info.setScore(20)
 info.startCountdown(20)
+if (true) {
+	
+}
