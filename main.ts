@@ -27,18 +27,21 @@ function compareTimes (list2: number[]) {
     }
     if (current_best_p1 > current_best_p2) {
         game.splash("Player 1 wins")
+        game.reset()
     } else if (current_best_p1 < current_best_p2) {
         game.splash("Player 2 wins")
+        game.reset()
     } else {
-        game.splash("Tie")
+        game.showLongText("Tie! Best times of both players are equal", DialogLayout.Center)
+        game.reset()
     }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, location2) {
     if (turn <= 1) {
         times.push(info.countdown())
         info.stopCountdown()
-        tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
         game.splash("Player 1 turn")
+        tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
         info.startCountdown(20)
     } else if (turn == 5) {
         times.push(info.countdown())
@@ -51,7 +54,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, 
         tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
         info.startCountdown(20)
     }
-    tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
     turn += 1
 })
 let current_best_p2 = 0
@@ -201,10 +203,10 @@ mySprite = sprites.create(img`
     . . . . . . f f f f f f . . . . 
     . . . . . . . f f f . . . . . . 
     `, SpriteKind.Player)
-tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
 mySprite.ay = 370
 controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
+tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
 jump = 0
 times = []
 turn = 0
