@@ -32,7 +32,7 @@ function compareTimes (list2: number[]) {
         game.splash("Player 2 wins")
         game.reset()
     } else {
-        game.showLongText("Tie! Best times of both players are equal", DialogLayout.Center)
+        game.showLongText("Tie", DialogLayout.Center)
         game.reset()
     }
 }
