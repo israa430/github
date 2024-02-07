@@ -38,17 +38,17 @@ function compareTimes (list2: number[]) {
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite2, location2) {
     if (turn <= 1) {
-        times.push(info.countdown())
+        times.push(Math.trunc(info.countdown()))
         info.stopCountdown()
         game.splash("Player 1 turn")
         tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
         info.startCountdown(20)
     } else if (turn == 5) {
-        times.push(info.countdown())
+        times.push(Math.trunc(info.countdown()))
         info.stopCountdown()
         compareTimes(times)
     } else {
-        times.push(info.countdown())
+        times.push(Math.trunc(info.countdown()))
         info.stopCountdown()
         game.splash("Player 2 turn")
         tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
